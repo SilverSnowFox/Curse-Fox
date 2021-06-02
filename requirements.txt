@@ -1,0 +1,4 @@
+texttoowo
+discord.py
+asyncio
+async-timeout
