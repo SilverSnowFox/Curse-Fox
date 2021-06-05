@@ -10,7 +10,7 @@ class Guilds(commands.Cog):
     async def create_curse(self, ctx, arg):
         # Check that server has agreed to terms
         # Check how to avoid SQL injection attacks
-        # Creates a curse arg
+        # Creates a curse arg, single word
         # Check that not profanity
         # Check that doesn't already exists
         pass

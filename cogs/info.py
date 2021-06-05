@@ -15,6 +15,7 @@ class Info(commands.Cog):
     async def cursed_users(self, ctx, arg=None):
         # If arg is none, lists amount of cursed users
         # If arg == all/All, lists all of the cursed users in an embed
+        # If arg is a mention, return if user is cursed and with what
         # Embed
         pass
 
