@@ -1,4 +1,4 @@
 texttoowo
-discord.py
+discord.py~=1.7.2
 asyncio
 async-timeout
