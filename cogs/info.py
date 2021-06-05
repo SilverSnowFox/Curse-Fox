@@ -24,6 +24,12 @@ class Info(commands.Cog):
         # Gets the bot latency
         pass
 
+    @commands.command(aliases=["Agreement"])
+    async def agreement(self):
+        # Need to have admin perms to agree
+        # Sends the agreement if haven't accepted, else sand that have
+        pass
+
 
 def setup(client):
     client.add_cog(Info(client))
