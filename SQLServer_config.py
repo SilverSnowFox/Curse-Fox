@@ -5,7 +5,7 @@ cursor = connection.cursor()
 
 
 def new_server(guild_id: int) -> None:
-    cursor.execute("INSERT INTO server_config(guild_id, agreed, all_can_cure)", (guild_id, False, False))
+    cursor.execute("INSERT INTO server_config(guild_id, agreed, all_can_cure)", (guild_id, 0, 1))
     connection.commit()
 
 
@@ -19,7 +19,7 @@ def check_agreed(guild_id: int) -> bool:
 
 
 def has_agreed(guild_id: int) -> None:
-    cursor.execute("UPDATE server_config SET agreed = ? WHERE guild_id = ?", (True, guild_id,))
+    cursor.execute("UPDATE server_config SET agreed = ? WHERE guild_id = ?", (1, guild_id,))
     connection.commit()
 
 
