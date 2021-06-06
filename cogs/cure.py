@@ -16,7 +16,7 @@ class Cure(commands.Cog):
 
     @commands.command(aliases=["Masscure", "masscure"])
     async def mass_cure(self, ctx):
-        # Admin or allowed roles only
+        # Admin
         # Cures all users in the server
         pass
 
