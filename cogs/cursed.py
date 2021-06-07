@@ -17,7 +17,9 @@ class Messages(commands.Cog):
         pass
 
     @commands.Cog.listener()
-    async def on_message(self, guild, message):
+    async def on_message(self, guild=discord.Guild, message=None):
+        if guild is None:
+            pass
         # Checks if user is cursed
         # Checks that not a DM and get info from guild
         # - If yes, gets data and creates webhook

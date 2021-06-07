@@ -1,6 +1,6 @@
 from discord.ext import commands
 import json
-import SQLServer_config as sqlsc
+from functions import SQLServer_config as sqlsc
 
 
 class Owner(commands.Cog):

@@ -28,3 +28,4 @@ A notice will be send on guild join, or if missed, use ```m!Agreement```.
 ```m!Delete <curse>```
 
 ## Default settings
+```m!EveryoneCanCure <>```
