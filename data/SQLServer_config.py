@@ -37,6 +37,14 @@ def everyone_cure(guild_id: int, val: int):
     connection.commit()
 
 
+def everyone_curse(guild_id: int, val: int):
+    cursor.execute("""UPDATE server_config 
+                      SET all_can_curse = ? 
+                      WHERE guild_id = ?""",
+                   (val, guild_id))
+    connection.commit()
+
+
 def can_everyone_cure(guild_id: int) -> bool:
     check = cursor.execute("""SELECT all_can_cure 
                               FROM server_config 

@@ -34,7 +34,7 @@ class Cure(commands.Cog):
             return
         await ctx.send("The cursed cannot cure another!")
 
-    @commands.command(aliases=["Masscure", "masscure"])
+    @commands.command(aliases=["Masscure", "masscure", "massCure"])
     @commands.has_permissions(administrator=True)
     async def mass_cure(self, ctx):
 
@@ -45,30 +45,6 @@ class Cure(commands.Cog):
         from data import SQLUser_cursed
         SQLUser_cursed.cure_server(ctx.guild.id)
         await ctx.send("Everyone has been cured!")
-
-    @commands.command(alises=["EveryoneCure", "everyoneCure", "everyonecure"])
-    @commands.has_permissions(administrator=True)
-    async def everyone_can_cure(self, ctx, arg):
-
-        if ctx.message.guild is None:
-            await ctx.send("You can't use this command in DMs!")
-            return
-
-        # Checks for valid input
-        answer = arg.lower()
-
-        if answer != 'true' and answer != 'false':
-            await ctx.send("Invalid argument. Please retry with `True` or `False`")
-            return
-
-        # Sets the permission to true or false
-        from data import SQLServer_config
-        if answer == 'true':
-            SQLServer_config.everyone_cure(ctx.guild.id, 1)
-        else:
-            SQLServer_config.everyone_cure(ctx.guild.id, 0)
-
-        await ctx.send("Settings changed.")
 
 
 def setup(client):

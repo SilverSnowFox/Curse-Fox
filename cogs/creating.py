@@ -28,7 +28,7 @@ class Guilds(commands.Cog):
             guild_id = ctx.guild.id
 
             # Limit curses to at most 20 characters
-            if len(arg) > 20:
+            if len(arg) >= 20:
                 await ctx.send("Please limit the curse to at most 20 characters.")
                 return
 
