@@ -1,5 +1,4 @@
 from discord.ext import commands
-from functions import SQLServer_config
 
 
 class Guilds(commands.Cog):
@@ -11,23 +10,26 @@ class Guilds(commands.Cog):
         # Creates server config
         guild_id = guild.id
 
+        from data import SQLServer_config
         SQLServer_config.new_server(guild_id)
 
-        from functions import SQLServer_curses
+        from data import SQLServer_curses
         SQLServer_curses.initiate_server(guild_id)
 
     @commands.Cog.listener()
-    async def on_guild_leave(self, guild):
+    async def on_guild_remove(self, guild):
         guild_id = guild.id
+
         # Deletes server config
+        from data import SQLServer_config
         SQLServer_config.delete_server(guild_id)
 
         # Deletes curses to save space
-        from functions import SQLServer_curses
+        from data import SQLServer_curses
         SQLServer_curses.delete_server(guild_id)
 
         # Deletes cursed users to save space
-        from functions import SQLUser_cursed
+        from data import SQLUser_cursed
         SQLUser_cursed.cure_server(guild_id)
 
 

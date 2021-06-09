@@ -6,46 +6,39 @@ class Info(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(aliases=["curses", "Curses"], no_pm=True)
+    @commands.command(aliases=["curses", "Curses"])
     async def curses_list(self, ctx):
-        try:
-            guild_id = ctx.guild.id
 
-            # Gets a List[tuple] of the curses
-            from functions import SQLServer_curses
-            all_curses = SQLServer_curses.get_all_curses(guild_id)
+        if ctx.message.guild is None:
+            await ctx.send("You can't use this command in DMs!")
+            return
 
-            guild_name = ctx.message.guild.name
+        guild_id = ctx.guild.id
 
-            if all_curses is None:
-                await ctx.send(f"No curses exist in {guild_name}.")
-                return
+        # Gets a List[tuple] of the curses
+        from data import SQLServer_curses
+        all_curses = SQLServer_curses.get_all_curses(guild_id)
 
-            k = 0
-            while k < len(all_curses):
-                ind_page = discord.Embed(title=f"List {guild_name}'s curses",
-                                         colour=discord.Colour.dark_purple())
-                text = ""
-                y = 0
-                while y < 10:
-                    text.join("¬ " + all_curses[k + y][0] + "\n")
-                    y += 1
-                ind_page.add_field(name="\u200b", value=text)
-                k += 10
+        guild_name = ctx.message.guild.name
 
-                await ctx.message.author.send(embed=ind_page)
-            await ctx.send("Sent you a DM!")
+        if all_curses is None:
+            await ctx.send(f"No curses exist in {guild_name}.")
+            return
 
-        except Exception as e:
-            print(e)
+        embed = discord.Embed(title=f"{guild_name}'s curses", colour=discord.Colour.dark_purple())
 
-    @commands.command(aliases=["Cursed", "cursed"])
-    async def cursed_users(self, ctx, arg=None):
-        # If arg is none, lists amount of cursed users
-        # If arg == all/All, lists all of the cursed users in an embed
-        # If arg is a mention, return if user is cursed and with what
-        # Embed
-        pass
+        k = 0
+        while k < len(all_curses):
+            text = ""
+            y = 0
+            while y < 10 and (y + k) < len(all_curses):
+                text += "¬ {}\n".format(all_curses[k + y][0])
+                y += 1
+            embed.add_field(name="\u200b", value=text)
+            k += 10
+
+        await ctx.message.author.send(embed=embed)
+        await ctx.send("Sent you a DM!")
 
     @commands.command(aliases=["Latency"])
     async def latency(self, ctx):

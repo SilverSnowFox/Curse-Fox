@@ -10,7 +10,7 @@ client.remove_command('help')
 @client.command()
 async def reload(ctx, extension):
     try:
-        with open("data/admin.json", "r") as f:
+        with open("./data/admin.json", "r") as f:
             admins = json.load(f)
             if ctx.message.author.id in admins:
                 client.unload_extension(f'cogs.{extension}')
@@ -20,7 +20,7 @@ async def reload(ctx, extension):
                 await ctx.send("This is an admin only command.")
     except commands.CommandInvokeError:
         await ctx.send("Cog doesn't exist.")
-    except FileExistsError:
+    except FileNotFoundError:
         await ctx.send("admin.json doesn't exist.")
 
 for filename in os.listdir('./cogs'):

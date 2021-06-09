@@ -7,59 +7,68 @@ class Cure(commands.Cog):
         self.client = client
 
     @commands.command(aliases=["Cure"])
-    async def cure(self, ctx, member=discord.Member):
-        try:
-            guild_id = ctx.guild.id
-            user_id = member.id
+    async def cure(self, ctx, member: discord.Member):
 
-            from functions import SQLServer_config
-            from functions import SQLUser_cursed
-            everyone_can = SQLServer_config.can_everyone_cure(guild_id)
-            cursed_user = SQLUser_cursed.user_is_cursed(guild_id, user_id)
+        if ctx.message.guild is None:
+            await ctx.send("You can't use this command in DMs!")
+            return
 
-            if not cursed_user:
-                await ctx.send("Can't cure that who is not cursed.")
-            elif everyone_can or ctx.message.author.server_permissions.administrator:
-                SQLUser_cursed.cure_user(guild_id, user_id)
-                await ctx.send(f"{member.mention} is cured!")
-            await ctx.send("The cursed cannot cure each other!")
+        guild_id = ctx.guild.id
+        user_id = member.id
 
-        except commands.MissingRequiredArgument:
-            await ctx.send("Please mention a user to cure.")
+        from data import SQLServer_config
+        everyone_can = SQLServer_config.can_everyone_cure(guild_id)
+
+        from data import SQLUser_cursed
+        cursed_user = SQLUser_cursed.user_is_cursed(guild_id, user_id)
+
+        if not cursed_user:
+            await ctx.send("Can't cure that who is not cursed.")
+            return
+        elif everyone_can or ctx.message.author.guild_permissions.administrator:
+            SQLUser_cursed.cure_user(guild_id, user_id)
+            await ctx.send(f"{member.mention} is cured!")
+            return
+        elif user_id == ctx.message.author.id:
+            await ctx.send("You can't cure yourself!")
+            return
+        await ctx.send("The cursed cannot cure another!")
 
     @commands.command(aliases=["Masscure", "masscure"])
     @commands.has_permissions(administrator=True)
     async def mass_cure(self, ctx):
-        try:
-            from functions import SQLUser_cursed
-            SQLUser_cursed.cure_server(ctx.guild.id)
 
-        except commands.MissingPermissions:
-            await ctx.send("This is an admin only command.")
+        if ctx.message.guild is None:
+            await ctx.send("You can't use this command in DMs!")
+            return
+
+        from data import SQLUser_cursed
+        SQLUser_cursed.cure_server(ctx.guild.id)
+        await ctx.send("Everyone has been cured!")
 
     @commands.command(alises=["EveryoneCure", "everyoneCure", "everyonecure"])
     @commands.has_permissions(administrator=True)
     async def everyone_can_cure(self, ctx, arg):
-        try:
-            # Checks for valid input
-            arg.lower()
-            if arg != 'true' and arg != 'false':
-                await ctx.send("Invalid argument. Please retry with `True` or `False`")
-                return
 
-            # Sets the permission
-            from functions import SQLServer_config
-            if arg == 'true':
-                SQLServer_config.everyone_cure(ctx.guild.id, 1)
-            else:
-                SQLServer_config.everyone_cure(ctx.guild.id, 0)
+        if ctx.message.guild is None:
+            await ctx.send("You can't use this command in DMs!")
+            return
 
-            await ctx.send("Settings changed.")
+        # Checks for valid input
+        answer = arg.lower()
 
-        except commands.MissingPermissions:
-            await ctx.send("This is an admin only command.")
-        except commands.MissingRequiredArgument:
-            await ctx.send("Missing arguments.")
+        if answer != 'true' and answer != 'false':
+            await ctx.send("Invalid argument. Please retry with `True` or `False`")
+            return
+
+        # Sets the permission to true or false
+        from data import SQLServer_config
+        if answer == 'true':
+            SQLServer_config.everyone_cure(ctx.guild.id, 1)
+        else:
+            SQLServer_config.everyone_cure(ctx.guild.id, 0)
+
+        await ctx.send("Settings changed.")
 
 
 def setup(client):
