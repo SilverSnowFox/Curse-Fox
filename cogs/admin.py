@@ -6,7 +6,7 @@ class Admin(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(alises=["EveryoneCure", "everyoneCure", "everyonecure"])
+    @commands.command(aliases=["EveryoneCure", "everyoneCure", "everyonecure"])
     @commands.has_permissions(administrator=True)
     async def everyone_can_cure(self, ctx, arg):
 
@@ -30,7 +30,7 @@ class Admin(commands.Cog):
 
         await ctx.send("Settings changed.")
 
-    @commands.command(alises=["EveryoneCurse", "everyoneCurse", "everyonecurse"])
+    @commands.command(aliases=["EveryoneCurse", "everyoneCurse", "everyonecurse"])
     @commands.has_permissions(administrator=True)
     async def everyone_can_curse(self, ctx, arg):
 
