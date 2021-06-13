@@ -23,6 +23,34 @@ async def reload(ctx, extension):
     except FileNotFoundError:
         await ctx.send("admin.json doesn't exist.")
 
+
+@client.command()
+async def load(ctx, extension):
+    try:
+        with open("./data/admin.json", "r") as f:
+            admins = json.load(f)
+            if ctx.message.author.id in admins:
+                client.load_extension(f'cogs.{extension}')
+                await ctx.send(f'cogs.{extension} loaded.')
+            else:
+                await ctx.send("This is an owner only command.")
+    except commands.CommandInvokeError:
+        await ctx.send("Cog doesn't exist.")
+
+
+@client.command()
+async def load(ctx, extension):
+    try:
+        with open("./data/admin.json", "r") as f:
+            admins = json.load(f)
+            if ctx.message.author.id in admins:
+                client.unload_extension(f'cogs.{extension}')
+                await ctx.send(f'cogs.{extension} unloaded.')
+            else:
+                await ctx.send("This is an owner only command.")
+    except commands.CommandInvokeError:
+        await ctx.send("Cog doesn't exist.")
+
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
