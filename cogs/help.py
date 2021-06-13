@@ -12,7 +12,7 @@ class Guilds(commands.Cog):
         guild = ctx.message.guild
         embed = discord.Embed(title=f"Hey {user_name}! Here are my commands and some information!",
                               colour=discord.Colour.dark_purple())
-        embed.add_field(name="Cursing uUers",
+        embed.add_field(name="Cursing Users",
                         value="You can curse someone using !!Curse <user> with an existing curse in the server." +
                               f"Ex: !!Curse {user_name} nya\n\n",
                         inline=False)
