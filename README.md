@@ -1,7 +1,7 @@
 # Curse Fox
 A Discord bot that adds a little something to those misbehaving or interested users by adding 'curses' to their messages!
 
-For example, if the user is cursed with 'woof', their messages will be replace with 'message woof'
+For example, if the user is cursed with 'woof', their messages will be replaced with 'message woof'
 
 ## Commands
 

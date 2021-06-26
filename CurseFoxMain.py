@@ -39,7 +39,7 @@ async def load(ctx, extension):
 
 
 @client.command()
-async def load(ctx, extension):
+async def unload(ctx, extension):
     try:
         with open("./data/admin.json", "r") as f:
             admins = json.load(f)

@@ -60,6 +60,10 @@ class Owner(commands.Cog):
         except FileNotFoundError:
             await ctx.send("No admin.json found.")
 
+    @commands.command(aliases=["ServerCount", "Servers"])
+    async def server_count(self, ctx):
+        await ctx.send(f"I'm currently online in {len(self.client.guilds)} servers")
+
 
 def setup(client):
     client.add_cog(Owner(client))
