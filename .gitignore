@@ -1,9 +1,2 @@
-.idea/
-data/token.json
-data/admins.json
-venv/
-__pycache__
-cogs/__pycache__
-functions/__pycache__
-data/servers
-*.pyc
+.idea
+token.json
